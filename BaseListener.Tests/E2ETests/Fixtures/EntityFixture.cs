@@ -53,9 +53,9 @@ namespace BaseListener.Tests.E2ETests.Fixtures
         {
             if (null == DbEntity)
             {
-                var tenure = ConstructAndSaveEntity(id);
-                DbEntity = tenure;
-                DbEntityId = tenure.Id;
+                var entity = ConstructAndSaveEntity(id);
+                DbEntity = entity;
+                DbEntityId = entity.Id;
             }
         }
 

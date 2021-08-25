@@ -53,7 +53,6 @@ DoSomethingUseCase.ctor(IDbEntityGateway gateway) line 16
 DoSomethingUseCaseTests.ctor() line 31
 ```
 
-
 ## Gateway & E2E DynamoDb setup
 
 In order to create valid tests that use an actual DynamoDb table2 things are needed:
@@ -90,6 +89,11 @@ public DynamoDbEntityGatewayTests(DynamoDbFixture dbTestFixture)
 }
 ```
 
+## E2E Tests
+These use BDDfy to implement tests that are constructed using the gherkin syntax.
+The triggering of the publicly-facing function is not done using a real SQS queue instance, but rather we create an instance of the `SqsFunction` class
+and call the `FunctionHandler()` method directly to simulate how AWS would do this in a deployed environment.
+See the [BaseSteps class](/E2ETests/Steps/BaseSteps.cs) for more details.
 
 
 ## Run coverage

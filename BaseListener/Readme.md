@@ -78,19 +78,20 @@ See the [test project readme](..\BaseListener.Tests\ReadMe.md) for more details.
 The docker files in the application and test projects, and the `docker-compose.yml` in the root work in exactly the same way as in the base api template.
 
 ## Terraform
-The terraform files included here contain large sections that are commented out, but that do have descriptive comments indicating what each section is for.
-Basically the connemted out sections include:
+The `main.tf` terraform files included here contain large sections that are commented out, but that do have descriptive comments indicating what each section is for.
+Basically the commented out sections include:
 * Define a parameter from the AWS parameter store that contains the arn of the SNS topic from which this application wants to receive the events.
 This should have been created be the service that published the events in the first place.
-* The creation of the SQS queue and dead letter queue to be used by this application
-* A subscription to to get the SNS topic to send events to this application's queue.
-* A policy the will permit the SNS topic to send events to this applicaiton's queue.
-* A Parameter store parameter that will contain the arn of the created SQS queue. (This is then used by `Serverless.yml`.)
+* The creation of the SQS queue and dead letter queue to be used by this application.
+* A subscription to get the SNS topic to send events to this application's queue.
+* A policy the will permit the SNS topic to send events to this application's queue.
+* A Parameter store parameter that will contain the arn of the created SQS queue. (This is then used by [`Serverless.yml`](#Serverless.yml).)
 
-**Note:**
+**Notes:**
 
-The DynamoDb database is not set up here. It is assumed that a listener is acting on an existing datastore that has already been created by
+* The DynamoDb database is not set up here. It is assumed that a listener is acting on an existing datastore that has already been created by
 a different application. As a result it is assumed that the DynamoDb database will already have been created elsewhere,
+* The `variable.tf` file for each environment defines the `project_name` variable. This must be updated to the appropriate project name.,
 
 
 ## CircleCi
@@ -98,5 +99,5 @@ This is the same as that used by the base api template.
 
 **Note:**
 
-This applicaiton makes use of common Hackney.Core.xxx NuGet packages and as a result requires that an environment variable is set up both locally and within the CircleCi project.
+This application makes use of common Hackney.Core.xxx NuGet packages and as a result requires that an environment variable is set up both locally and within the CircleCi project.
 [See here for more information on how to set this up.](https://github.com/LBHackney-IT/lbh-core/wiki/Using-the-package(s)-from-the-Hackney.Core-repository#environment-variable)
