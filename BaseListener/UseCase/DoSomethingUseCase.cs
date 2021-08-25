@@ -29,7 +29,7 @@ namespace BaseListener.UseCase
 
             entity.Description = "Updated";
 
-            // Save updated tenure
+            // Save updated entity
             await _gateway.SaveEntityAsync(entity).ConfigureAwait(false);
         }
     }
