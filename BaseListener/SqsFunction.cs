@@ -67,7 +67,7 @@ namespace BaseListener
         }
 
         /// <summary>
-        /// Method called to process every distinc message received.
+        /// Method called to process every distinct message received.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="context"></param>
