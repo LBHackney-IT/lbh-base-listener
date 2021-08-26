@@ -72,7 +72,7 @@ All code should have appropriate unit tests where possible.
 (Some infrastructure code like the `SQSFunction` and `BaseFunction` cannot, but they should be marked with the `ExcludeFromCodeCoverage`
 attribute so as not to skew the code coverage metrics.)
 
-See the [test project readme](..\BaseListener.Tests\ReadMe.md) for more details.
+See the [test project readme](../BaseListener.Tests/ReadMe.md) for more details.
 
 ## Docker
 The docker files in the application and test projects, and the `docker-compose.yml` in the root work in exactly the same way as in the base api template.
@@ -85,7 +85,7 @@ This should have been created be the service that published the events in the fi
 * The creation of the SQS queue and dead letter queue to be used by this application.
 * A subscription to get the SNS topic to send events to this application's queue.
 * A policy the will permit the SNS topic to send events to this application's queue.
-* A Parameter store parameter that will contain the arn of the created SQS queue. (This is then used by [`Serverless.yml`](#Serverless.yml).)
+* A Parameter store parameter that will contain the arn of the created SQS queue. (This is then used by [`Serverless.yml`](#Serverlessyml).)
 
 **Notes:**
 

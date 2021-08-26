@@ -16,7 +16,7 @@ This is the test project for the BaseListener application.
 - Tests should be independent of each other
   - This means that any data created for a test (by the test setup or by the code being tested itself) shold be removed once the test is done.
 - Gateway tests should interact with a real test instance of the database/datastore
-- Test coverage should never go down. (See the [below](#Run-coverage) for how to run a coverage check.)
+- Test coverage should never go down. (See the [below](#run-coverage) for how to run a coverage check.)
 - All use cases should be covered by E2E tests
 - Optimise when test run speed starts to hinder development
 - Unit tests and E2E tests should run in CI
@@ -93,7 +93,7 @@ public DynamoDbEntityGatewayTests(DynamoDbFixture dbTestFixture)
 These use BDDfy to implement tests that are constructed using the gherkin syntax.
 The triggering of the publicly-facing function is not done using a real SQS queue instance, but rather we create an instance of the `SqsFunction` class
 and call the `FunctionHandler()` method directly to simulate how AWS would do this in a deployed environment.
-See the [BaseSteps class](/E2ETests/Steps/BaseSteps.cs) for more details.
+See the [BaseSteps class](/BaseListener.Tests/E2ETests/Steps/BaseSteps.cs) for more details.
 
 
 ## Run coverage
