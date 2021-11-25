@@ -1,5 +1,6 @@
 using BaseListener.Tests.E2ETests.Fixtures;
 using BaseListener.Tests.E2ETests.Steps;
+using Hackney.Core.Testing.DynamoDb;
 using System;
 using TestStack.BDDfy;
 using Xunit;
@@ -10,17 +11,17 @@ namespace BaseListener.Tests.E2ETests.Stories
         AsA = "SQS Entity Listener",
         IWant = "a function to process the DoSomething message",
         SoThat = "The correct details are set on the entity")]
-    [Collection("DynamoDb collection")]
+    [Collection("AppTest collection")]
     public class DoSomethingTests : IDisposable
     {
-        private readonly DynamoDbFixture _dbFixture;
+        private readonly IDynamoDbFixture _dbFixture;
         private readonly EntityFixture _entityFixture;
 
         private readonly DoSomethingUseCaseSteps _steps;
 
-        public DoSomethingTests(DynamoDbFixture dbFixture)
+        public DoSomethingTests(MockApplicationFactory appFactory)
         {
-            _dbFixture = dbFixture;
+            _dbFixture = appFactory.DynamoDbFixture;
 
             _entityFixture = new EntityFixture(_dbFixture.DynamoDbContext);
 
