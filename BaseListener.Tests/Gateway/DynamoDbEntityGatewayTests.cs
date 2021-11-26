@@ -5,6 +5,8 @@ using BaseListener.Factories;
 using BaseListener.Gateway;
 using BaseListener.Infrastructure;
 using FluentAssertions;
+using Hackney.Core.Testing.DynamoDb;
+using Hackney.Core.Testing.Shared;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -14,19 +16,19 @@ using Xunit;
 
 namespace BaseListener.Tests.Gateway
 {
-    [Collection("DynamoDb collection")]
+    [Collection("AppTest collection")]
     public class DynamoDbEntityGatewayTests : IDisposable
     {
         private readonly Fixture _fixture = new Fixture();
         private readonly Mock<ILogger<DynamoDbEntityGateway>> _logger;
         private readonly DynamoDbEntityGateway _classUnderTest;
-        private DynamoDbFixture _dbTestFixture;
-        private IDynamoDBContext DynamoDb => _dbTestFixture.DynamoDbContext;
+        private readonly IDynamoDbFixture _dbFixture;
+        private IDynamoDBContext DynamoDb => _dbFixture.DynamoDbContext;
         private readonly List<Action> _cleanup = new List<Action>();
 
-        public DynamoDbEntityGatewayTests(DynamoDbFixture dbTestFixture)
+        public DynamoDbEntityGatewayTests(MockApplicationFactory appFactory)
         {
-            _dbTestFixture = dbTestFixture;
+            _dbFixture = appFactory.DynamoDbFixture;
             _logger = new Mock<ILogger<DynamoDbEntityGateway>>();
             _classUnderTest = new DynamoDbEntityGateway(DynamoDb, _logger.Object);
         }
@@ -45,20 +47,13 @@ namespace BaseListener.Tests.Gateway
                 foreach (var action in _cleanup)
                     action();
 
-                if (_dbTestFixture != null)
-                {
-                    _dbTestFixture.Dispose();
-                    _dbTestFixture = null;
-                }
-
                 _disposed = true;
             }
         }
 
         private async Task InsertDatatoDynamoDB(DomainEntity entity)
         {
-            await DynamoDb.SaveAsync(entity.ToDatabase()).ConfigureAwait(false);
-            _cleanup.Add(async () => await DynamoDb.DeleteAsync<DbEntity>(entity.Id).ConfigureAwait(false));
+            await _dbFixture.SaveEntityAsync(entity.ToDatabase()).ConfigureAwait(false);
         }
 
         private DomainEntity ConstructDomainEntity()
