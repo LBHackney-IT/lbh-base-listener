@@ -1,5 +1,3 @@
-version: "3.2"
-
 services:
   base-listener:
     image: base-listener
@@ -38,10 +36,10 @@ services:
       - AWS_SECRET_ACCESS_KEY=local
     links:
       - dynamodb-database
-    
+
   # Alter if not using DynamoDb
   dynamodb-database:
     image: amazon/dynamodb-local
     ports:
       - 8000:8000
-      
+
